@@ -3,6 +3,7 @@ package com.eqcm.api.presentation.controller.configuration
 import com.eqcm.api.application.common.GlobalResponseType
 import com.eqcm.api.application.exception.BaseException
 import com.eqcm.api.presentation.common.response.ErrorResponse
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.method.annotation.HandlerMethodValidationException
@@ -18,5 +19,10 @@ class GlobalExceptionHandler {
     @ExceptionHandler(HandlerMethodValidationException::class)
     fun handleHandlerMethodValidationException(e: HandlerMethodValidationException): ErrorResponse {
         return ErrorResponse(GlobalResponseType.BAD_REQUEST, e.reason ?: "")
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): ErrorResponse {
+        return ErrorResponse(GlobalResponseType.BAD_REQUEST, e.message)
     }
 }
