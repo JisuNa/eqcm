@@ -40,7 +40,7 @@ class JoinService(
         return memberRepository.save(member)
     }
 
-    private fun addMemberAgreement(memberAgreement: MemberAgreement) {
-        memberAgreementRepository.save(memberAgreement)
+    private fun addMemberAgreement(memberAgreement: List<MemberAgreement>) {
+        memberAgreementRepository.saveAll(memberAgreement)
     }
 }

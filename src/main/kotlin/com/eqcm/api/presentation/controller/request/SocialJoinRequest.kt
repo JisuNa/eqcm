@@ -7,20 +7,16 @@ import jakarta.validation.constraints.NotNull
 
 class SocialJoinRequest(
     val joinRequest: JoinRequest,
-    val termsAgreement: TermsAgreement,
+    val termsAgreements: List<TermsAgreement>,
     val socialProviderType: SocialProviderType,
     @field:NotNull
     val socialId: String,
 ) {
-    fun toMemberEntity() = Member(
-        email = joinRequest.email,
-        name = joinRequest.name,
-        gender = joinRequest.gender,
-        birthday = joinRequest.birthday,
-        phoneNumber = joinRequest.phoneNumber
-    )
+    fun toMemberEntity() = joinRequest.toMemberEntity()
 
-    fun toMemberAgreementEntity(memberId: Long) = termsAgreement.toMemberAgreementEntity(memberId)
+    fun toMemberAgreementEntity(memberId: Long) = termsAgreements.map {
+        it.toMemberAgreementEntity(memberId)
+    }
 
     fun toMemberSocialEntity(memberId: Long) = MemberSocial(
         memberId = memberId,

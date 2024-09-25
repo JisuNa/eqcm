@@ -1,5 +1,6 @@
 package com.eqcm.api.infrastructure.persistence.entity
 
+import com.eqcm.api.common.declaration.Gender
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -12,7 +13,7 @@ class Member(
     val email: String,
     var password: String? = null,
     var name: String,
-    var gender: String,
+    var gender: Gender,
     val birthday: String,
     var phoneNumber: String
 ) {
