@@ -1,6 +1,7 @@
 package com.eqcm.api.application.service
 
 import com.eqcm.api.application.exception.DuplicateEmailException
+import com.eqcm.api.domain.value.Email
 import com.eqcm.api.infrastructure.persistence.entity.Member
 import com.eqcm.api.infrastructure.persistence.entity.MemberAgreement
 import com.eqcm.api.infrastructure.persistence.repository.MemberAgreementRepository
@@ -20,7 +21,7 @@ class JoinService(
 ) {
     @Transactional
     fun emailJoin(req: EmailJoinRequest) {
-        checkEmail(req.joinRequest.email)
+        checkEmail(req.joinInfo.email)
         val member = addMember(req.toMemberEntity())
         addMemberAgreement(req.toMemberAgreementEntity(member.id))
     }
@@ -32,8 +33,8 @@ class JoinService(
         memberSocialRepository.save(request.toMemberSocialEntity(member.id))
     }
 
-    private fun checkEmail(email: String) {
-        memberRepository.findByEmail(email)?.also { throw DuplicateEmailException() }
+    private fun checkEmail(email: Email) {
+        memberRepository.findByEmail(email.value)?.also { throw DuplicateEmailException() }
     }
 
     private fun addMember(member: Member): Member {

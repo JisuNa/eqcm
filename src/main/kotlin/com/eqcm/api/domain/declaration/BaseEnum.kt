@@ -1,4 +1,4 @@
-package com.eqcm.api.common.declaration
+package com.eqcm.api.domain.declaration
 
 interface BaseEnum {
     // 데이터베이스에 저장되는 값

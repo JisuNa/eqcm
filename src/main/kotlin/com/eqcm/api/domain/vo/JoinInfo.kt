@@ -1,6 +1,9 @@
-package com.eqcm.api.presentation.controller.request
+package com.eqcm.api.domain.vo
 
-import com.eqcm.api.common.declaration.Gender
+import com.eqcm.api.domain.declaration.Gender
+import com.eqcm.api.domain.value.Birthday
+import com.eqcm.api.domain.value.Email
+import com.eqcm.api.domain.value.PhoneNumber
 import com.eqcm.api.infrastructure.persistence.entity.Member
 import com.eqcm.api.presentation.controller.configuration.annotation.EmailFormat
 import jakarta.validation.constraints.NotNull
@@ -9,17 +12,12 @@ import java.time.LocalDate
 
 import org.springframework.format.annotation.DateTimeFormat
 
-data class JoinRequest(
-    @field:EmailFormat
-    val email: String,
-    @field:NotNull
+data class JoinInfo(
+    val email: Email,
     val name: String,
-    @field:NotNull
     val gender: Gender,
-    @field:DateTimeFormat(pattern = "yyyy-MM-dd")
-    val birthday: LocalDate,
-    @field:Pattern(regexp = "^010-\\d{4}-\\d{4}$", message = "휴대폰 번호 양식으로 입력해주세요.")
-    val phoneNumber: String
+    val birthday: Birthday,
+    val phoneNumber: PhoneNumber
 ) {
     fun toMemberEntity() = Member(
         email = email,

@@ -1,22 +1,24 @@
 package com.eqcm.api.infrastructure.persistence.entity
 
-import com.eqcm.api.common.declaration.Gender
+import com.eqcm.api.domain.declaration.Gender
+import com.eqcm.api.domain.value.Birthday
+import com.eqcm.api.domain.value.Email
+import com.eqcm.api.domain.value.PhoneNumber
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import java.time.LocalDate
 import java.time.LocalDateTime
 import org.springframework.data.annotation.CreatedDate
 
 @Entity
 class Member(
-    val email: String,
+    val email: Email,
     var password: String? = null,
     var name: String,
     var gender: Gender,
-    val birthday: LocalDate,
-    var phoneNumber: String
+    val birthday: Birthday,
+    var phoneNumber: PhoneNumber
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

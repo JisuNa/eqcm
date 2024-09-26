@@ -1,6 +1,7 @@
-package com.eqcm.api.common.declaration
+package com.eqcm.api.common.converter
 
 import com.eqcm.api.application.exception.InvalidEnumCodeInDbDataException
+import com.eqcm.api.domain.declaration.BaseEnum
 import jakarta.persistence.AttributeConverter
 
 open class AbstractBaseEnumConverter<E>(

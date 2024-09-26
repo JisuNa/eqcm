@@ -1,7 +1,7 @@
 package com.eqcm.api.infrastructure.persistence.entity
 
-import com.eqcm.api.common.declaration.TermsType
-import com.eqcm.api.common.declaration.Yn
+import com.eqcm.api.domain.declaration.TermsType
+import com.eqcm.api.domain.declaration.Yn
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import java.time.LocalDateTime

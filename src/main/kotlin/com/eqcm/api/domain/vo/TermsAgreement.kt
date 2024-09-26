@@ -1,7 +1,7 @@
-package com.eqcm.api.presentation.controller.request
+package com.eqcm.api.domain.vo
 
-import com.eqcm.api.common.declaration.TermsType
-import com.eqcm.api.common.declaration.Yn
+import com.eqcm.api.domain.declaration.TermsType
+import com.eqcm.api.domain.declaration.Yn
 import com.eqcm.api.infrastructure.persistence.entity.MemberAgreement
 
 data class TermsAgreement(

@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/join")
 class JoinController(private val joinService: JoinService) {
     @PostMapping("/email", name = "이메일 회원가입")
-    fun emailJoin(@RequestBody @Validated request: EmailJoinRequest): NoDataResponse {
-        joinService.emailJoin(request)
+    fun emailJoin(@RequestBody @Validated req: EmailJoinRequest): NoDataResponse {
+        joinService.emailJoin(req)
         return NoDataResponse()
     }
 
     @PostMapping("/social", name = "소셜 회원가입")
-    fun socialJoin(@RequestBody @Validated request: SocialJoinRequest): NoDataResponse {
-        joinService.socialJoin(request)
+    fun socialJoin(@RequestBody @Validated req: SocialJoinRequest): NoDataResponse {
+        joinService.socialJoin(req)
         return NoDataResponse()
     }
 }
