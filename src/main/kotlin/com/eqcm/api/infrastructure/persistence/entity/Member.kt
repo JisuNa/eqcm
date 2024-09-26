@@ -5,6 +5,7 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import java.time.LocalDate
 import java.time.LocalDateTime
 import org.springframework.data.annotation.CreatedDate
 
@@ -14,7 +15,7 @@ class Member(
     var password: String? = null,
     var name: String,
     var gender: Gender,
-    val birthday: String,
+    val birthday: LocalDate,
     var phoneNumber: String
 ) {
     @Id

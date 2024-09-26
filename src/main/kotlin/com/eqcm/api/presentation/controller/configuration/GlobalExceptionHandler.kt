@@ -23,6 +23,6 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): ErrorResponse {
-        return ErrorResponse(GlobalResponseType.BAD_REQUEST, e.message)
+        return ErrorResponse(GlobalResponseType.BAD_REQUEST, "입력 값을 확인해주세요. ${e.bindingResult.fieldErrors[0].field}")
     }
 }

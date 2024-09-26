@@ -1,5 +1,6 @@
 package com.eqcm.api.common.declaration
 
+import com.eqcm.api.application.exception.InvalidEnumCodeInDbDataException
 import jakarta.persistence.AttributeConverter
 
 open class AbstractBaseEnumConverter<E>(
@@ -15,10 +16,10 @@ open class AbstractBaseEnumConverter<E>(
                 return it
             }
         }
-        return "" as E
-//        throw InvalidEnumCodeInDbDataException(
-//            enumClass = targetBaseEnumClass,
-//            dbData = dbData
-//        )
+
+        throw InvalidEnumCodeInDbDataException(
+            enumClass = targetBaseEnumClass,
+            dbData = dbData
+        )
     }
 }
