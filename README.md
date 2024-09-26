@@ -1,6 +1,6 @@
 # eqcm
 
-## Spac
+## Spec
 
 - Kotlin
 - JDK 21
@@ -12,3 +12,8 @@
 $ ./gradlew bootRun
 ```
 
+## API 명세
+
+### 1. 회원가입
+
+### 2. 로그인
