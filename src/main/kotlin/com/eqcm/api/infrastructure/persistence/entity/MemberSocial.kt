@@ -1,6 +1,6 @@
 package com.eqcm.api.infrastructure.persistence.entity
 
-import com.eqcm.api.common.declaration.SocialProviderType
+import com.eqcm.api.domain.declaration.SocialProviderType
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 

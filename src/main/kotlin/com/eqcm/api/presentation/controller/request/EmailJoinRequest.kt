@@ -1,16 +1,14 @@
 package com.eqcm.api.presentation.controller.request
 
-import jakarta.validation.Valid
-import jakarta.validation.constraints.NotNull
+import com.eqcm.api.domain.vo.JoinInfo
+import com.eqcm.api.domain.vo.TermsAgreement
 
 data class EmailJoinRequest(
-    @field:Valid
-    val joinRequest: JoinRequest,
+    val joinInfo: JoinInfo,
     val termsAgreements: List<TermsAgreement>,
-    @field:NotNull
     val password: String
 ) {
-    fun toMemberEntity() = joinRequest.toMemberEntity()
+    fun toMemberEntity() = joinInfo.toMemberEntity()
 
     fun toMemberAgreementEntity(memberId: Long) = termsAgreements.map {
         it.toMemberAgreementEntity(memberId)
