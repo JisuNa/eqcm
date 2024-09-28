@@ -5,10 +5,16 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
-class WebConfig: WebMvcConfigurer {
+class WebConfig : WebMvcConfigurer {
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**")
             .allowedOrigins("*")
-            .allowedMethods("POST", "PUT", "GET", "DELETE")
+            .allowedHeaders(ALLOWED_HEADERS)
+            .allowedMethods(ALLOWED_METHODS)
+    }
+
+    companion object {
+        const val ALLOWED_METHODS = "POST, PUT, GET, DELETE, OPTIONS"
+        const val ALLOWED_HEADERS = "Content-Type, Authorization"
     }
 }
