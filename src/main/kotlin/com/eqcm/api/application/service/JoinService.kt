@@ -27,14 +27,15 @@ class JoinService(
     }
 
     @Transactional
-    fun socialJoin(request: SocialJoinRequest) {
-        val member = addMember(request.toMemberEntity())
-        addMemberAgreement(request.toMemberAgreementEntity(member.id))
-        memberSocialRepository.save(request.toMemberSocialEntity(member.id))
+    fun socialJoin(req: SocialJoinRequest) {
+        checkEmail(req.joinInfo.email)
+        val member = addMember(req.toMemberEntity())
+        addMemberAgreement(req.toMemberAgreementEntity(member.id))
+        memberSocialRepository.save(req.toMemberSocialEntity(member.id))
     }
 
     private fun checkEmail(email: Email) {
-        memberRepository.findByEmail(email.value)?.also { throw DuplicateEmailException() }
+        memberRepository.findByEmail(email)?.also { throw DuplicateEmailException() }
     }
 
     private fun addMember(member: Member): Member {

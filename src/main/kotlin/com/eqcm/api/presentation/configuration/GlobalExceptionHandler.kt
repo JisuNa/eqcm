@@ -1,4 +1,4 @@
-package com.eqcm.api.presentation.controller.configuration
+package com.eqcm.api.presentation.configuration
 
 import com.eqcm.api.application.common.GlobalResponseType
 import com.eqcm.api.application.exception.BaseException
