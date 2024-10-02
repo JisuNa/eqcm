@@ -23,7 +23,6 @@ class GlobalExceptionHandler {
         return ErrorResponse(GlobalResponseType.BAD_REQUEST, e.reason ?: "")
     }
 
-
     @ExceptionHandler(HttpMessageNotReadableException::class)
     fun handleHttpMessageNotReadableException(e: HttpMessageNotReadableException): ErrorResponse {
         val cause = e.cause as? MismatchedInputException

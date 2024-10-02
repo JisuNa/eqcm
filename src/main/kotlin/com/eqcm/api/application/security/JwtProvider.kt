@@ -4,6 +4,8 @@ import com.eqcm.api.domain.value.Email
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import jakarta.xml.bind.DatatypeConverter
+import java.nio.charset.StandardCharsets
+import java.util.Base64
 import java.util.Date
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
@@ -11,9 +13,9 @@ import org.springframework.stereotype.Component
 @Component
 class JwtProvider(
     @Value("\${jwt.secret}")
-    private val secret: String? = null
+    private val secret: String
 ) {
-    private val secretByte = DatatypeConverter.parseBase64Binary(secret)
+    private val secretByte = secret.toByteArray(StandardCharsets.UTF_8)
     private val secretKey = Keys.hmacShaKeyFor(secretByte)
 
     fun accessToken(email: Email) = generate(email, ACCESS_TOKEN_EXPIRATION)
