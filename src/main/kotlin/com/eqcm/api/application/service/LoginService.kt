@@ -3,6 +3,7 @@ package com.eqcm.api.application.service
 import com.eqcm.api.application.exception.NotFoundMemberSocialException
 import com.eqcm.api.application.exception.UnauthorizedException
 import com.eqcm.api.application.security.JwtProvider
+import com.eqcm.api.domain.declaration.JwtType
 import com.eqcm.api.domain.declaration.SocialProviderType
 import com.eqcm.api.domain.value.Email
 import com.eqcm.api.domain.vo.AuthToken
@@ -24,10 +25,7 @@ class LoginService(
             if (it.password != password) throw UnauthorizedException()
         }
 
-        val accessToken = jwtProvider.accessToken(email)
-        val refreshToken = jwtProvider.refreshToken(email)
-
-        return AuthToken(accessToken, refreshToken)
+        return getAuthToken(email)
     }
 
     private fun getMemberWithEmail(email: Email): Member {
@@ -38,10 +36,7 @@ class LoginService(
         val member = getMemberWithEmail(email)
         checkMemberSocial(member.id, type, socialId)
 
-        val accessToken = jwtProvider.accessToken(email)
-        val refreshToken = jwtProvider.refreshToken(email)
-
-        return AuthToken(accessToken, refreshToken)
+        return getAuthToken(email)
     }
 
     private fun checkMemberSocial(memberId: Long, type: SocialProviderType, socialId: String): MemberSocial {
@@ -51,5 +46,12 @@ class LoginService(
                     throw NotFoundMemberSocialException()
                 }
             } ?: throw NotFoundMemberSocialException()
+    }
+
+    private fun getAuthToken(email: Email): AuthToken {
+        val accessToken = jwtProvider.generate(email, JwtType.ACCESS)
+        val refreshToken = jwtProvider.generate(email, JwtType.REFRESH)
+
+        return AuthToken(accessToken, refreshToken)
     }
 }
