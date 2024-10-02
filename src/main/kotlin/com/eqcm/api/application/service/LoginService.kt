@@ -50,7 +50,6 @@ class LoginService(
                 if (it.providerType != type || it.socialId != socialId) {
                     throw NotFoundMemberSocialException()
                 }
-            }
-            ?: throw NotFoundMemberSocialException()
+            } ?: throw NotFoundMemberSocialException()
     }
 }
