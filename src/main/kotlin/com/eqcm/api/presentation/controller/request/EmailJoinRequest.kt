@@ -7,10 +7,4 @@ data class EmailJoinRequest(
     val joinInfo: JoinInfo,
     val termsAgreements: List<TermsAgreement>,
     val password: String
-) {
-    fun toMemberEntity() = joinInfo.toMemberEntity()
-
-    fun toMemberAgreementEntity(memberId: Long) = termsAgreements.map {
-        it.toMemberAgreementEntity(memberId)
-    }
-}
+)

@@ -1,8 +1,10 @@
 package com.eqcm.api.application.service
 
+import com.eqcm.api.application.exception.NotAllowEmailLoginException
 import com.eqcm.api.application.exception.NotFoundMemberSocialException
 import com.eqcm.api.application.exception.UnauthorizedException
 import com.eqcm.api.application.security.JwtProvider
+import com.eqcm.api.application.security.PasswordProvider
 import com.eqcm.api.domain.declaration.JwtType
 import com.eqcm.api.domain.declaration.SocialProviderType
 import com.eqcm.api.domain.value.Email
@@ -18,11 +20,18 @@ import org.springframework.stereotype.Service
 class LoginService(
     private val memberRepository: MemberRepository,
     private val memberSocialRepository: MemberSocialRepository,
-    private val jwtProvider: JwtProvider
+    private val jwtProvider: JwtProvider,
+    private val passwordProvider: PasswordProvider
 ) {
     fun emailLogin(email: Email, password: String): AuthToken {
-        getMemberWithEmail(email).also {
-            if (it.password != password) throw UnauthorizedException()
+        val member = getMemberWithEmail(email)
+
+        val memberPassword = member.password ?: memberSocialRepository.findById(member.id).getOrNull()
+            ?.let { throw NotAllowEmailLoginException() }
+        ?: throw UnauthorizedException()
+
+        if (!passwordProvider.matches(password, memberPassword)) {
+            throw UnauthorizedException()
         }
 
         return getAuthToken(email)
