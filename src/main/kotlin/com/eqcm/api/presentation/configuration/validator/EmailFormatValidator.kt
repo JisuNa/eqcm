@@ -1,6 +1,6 @@
-package com.eqcm.api.presentation.controller.configuration.validator
+package com.eqcm.api.presentation.configuration.validator
 
-import com.eqcm.api.presentation.controller.configuration.annotation.EmailFormat
+import com.eqcm.api.presentation.configuration.annotation.EmailFormat
 import jakarta.validation.ConstraintValidator
 import jakarta.validation.ConstraintValidatorContext
 

@@ -27,4 +27,8 @@ class Member(
     @CreatedDate
     val createdDtm: LocalDateTime = LocalDateTime.now()
     var updatedDtm: LocalDateTime = LocalDateTime.now()
+
+    override fun equals(other: Any?)= (other is Member) && id == other.id
+
+    override fun hashCode() = id.hashCode()
 }

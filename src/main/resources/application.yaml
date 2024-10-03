@@ -21,3 +21,5 @@ spring:
     defer-datasource-initialization: true
     hibernate:
       ddl-auto: none
+jwt:
+  secret: ${JWT_SECRET_KEY:"249526a8897e06af7d405b9705f3611f56fe4f4e6d55e078f52cd7e979f952aeb5a716d72939b51abd84ff8b9fbbb6427828890d7262cedcbef827e62452be84="}
