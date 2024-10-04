@@ -2,6 +2,7 @@ package com.eqcm.api.application.service
 
 import com.eqcm.api.application.exception.NotAllowEmailLoginException
 import com.eqcm.api.application.exception.NotFoundMemberSocialException
+import com.eqcm.api.application.exception.NotFoundPasswordException
 import com.eqcm.api.application.exception.UnauthorizedException
 import com.eqcm.api.application.security.JwtProvider
 import com.eqcm.api.application.security.PasswordProvider
@@ -28,7 +29,7 @@ class LoginService(
 
         val memberPassword = member.password ?: memberSocialRepository.findById(member.id).getOrNull()
             ?.let { throw NotAllowEmailLoginException() }
-        ?: throw UnauthorizedException()
+        ?: throw NotFoundPasswordException()
 
         if (!passwordProvider.matches(password, memberPassword)) {
             throw UnauthorizedException()
