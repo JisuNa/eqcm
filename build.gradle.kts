@@ -25,6 +25,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
     implementation("io.jsonwebtoken:jjwt:0.12.6")
+    implementation("org.mindrot:jbcrypt:0.4")
     runtimeOnly("com.h2database:h2")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

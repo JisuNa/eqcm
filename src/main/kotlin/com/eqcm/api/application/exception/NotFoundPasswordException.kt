@@ -2,4 +2,4 @@ package com.eqcm.api.application.exception
 
 import com.eqcm.api.application.common.GlobalResponseType
 
-class SocialUnauthorizedException : BaseException(GlobalResponseType.SOCIAL_UNAUTHORIZED)
+class NotFoundPasswordException : BaseException(GlobalResponseType.NOT_FOUND_PASSWORD)
