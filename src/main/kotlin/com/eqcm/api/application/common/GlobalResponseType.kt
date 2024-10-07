@@ -16,8 +16,12 @@ enum class GlobalResponseType(
     DUPLICATE_EMAIL("403", HttpStatus.FORBIDDEN, "이미 가입된 이메일입니다."),
     NOT_ALLOW_EMAIL_LOGIN("403", HttpStatus.FORBIDDEN, "소셜로 가입된 계정입니다."),
     NOT_FOUND_PASSWORD("403", HttpStatus.FORBIDDEN, "비밀번호가 설정되어있지 않습니다. 관리자에게 문의하세요."),
+    NOT_MATCHED_VERIFY_NUMBER("403", HttpStatus.FORBIDDEN, "인증번호가 일치하지 않습니다."),
+    NOT_GENERATE_VERIFY_NUMBER("403", HttpStatus.FORBIDDEN, "인증번호를 발급해주세요."),
+    EXPIRED_VERIFY_NUMBER("403", HttpStatus.FORBIDDEN, "인증번호가 만료되었습니다."),
 
     NOT_FOUND_MEMBER_SOCIAL("404", HttpStatus.NOT_FOUND, "해당 사용자의 소셜 로그인 정보가 존재하지 않습니다."),
 
     INVALID_ENUM_CODE_IN_DB_DATA("500", HttpStatus.INTERNAL_SERVER_ERROR, "DB에 저장된 열거형 코드가 올바르지 않습니다."),
+
 }

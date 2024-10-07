@@ -33,3 +33,14 @@ create table member_agreement
     updated_dtm datetime        not null comment '수정일시',
     primary key (member_id)
 ) comment '회원 동의';
+
+create table verify_number
+(
+    id            bigint unsigned auto_increment comment '식별값',
+    phone_number  varchar(20) not null comment '전화번호',
+    number varchar(4)  not null comment '인증번호',
+    expired_dtm   datetime     not null comment '만료일시',
+    primary key (id)
+) comment '인증번호';
+
+create unique index verify_number_phone_number_uindex on verify_number (phone_number);

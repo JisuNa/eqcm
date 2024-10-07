@@ -1,17 +1,24 @@
 package com.eqcm.api.application.service
 
 import com.eqcm.api.application.exception.DuplicateEmailException
+import com.eqcm.api.application.exception.ExpiredVerifyNumberException
+import com.eqcm.api.application.exception.NotGenerateVerifyNumberException
+import com.eqcm.api.application.exception.NotMatchedVerifyNumberException
 import com.eqcm.api.application.security.PasswordProvider
 import com.eqcm.api.domain.value.Email
+import com.eqcm.api.domain.value.PhoneNumber
 import com.eqcm.api.domain.vo.TermsAgreement
 import com.eqcm.api.infrastructure.persistence.entity.Member
 import com.eqcm.api.infrastructure.persistence.entity.MemberAgreement
 import com.eqcm.api.infrastructure.persistence.entity.MemberSocial
+import com.eqcm.api.infrastructure.persistence.entity.VerifyNumber
 import com.eqcm.api.infrastructure.persistence.repository.MemberAgreementRepository
 import com.eqcm.api.infrastructure.persistence.repository.MemberRepository
 import com.eqcm.api.infrastructure.persistence.repository.MemberSocialRepository
+import com.eqcm.api.infrastructure.persistence.repository.VerifyNumberRepository
 import com.eqcm.api.presentation.controller.request.EmailJoinRequest
 import com.eqcm.api.presentation.controller.request.SocialJoinRequest
+import java.time.LocalDateTime
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -20,6 +27,7 @@ class JoinService(
     private val memberRepository: MemberRepository,
     private val memberAgreementRepository: MemberAgreementRepository,
     private val memberSocialRepository: MemberSocialRepository,
+    private val verifyNumberRepository: VerifyNumberRepository,
     private val passwordProvider: PasswordProvider
 ) {
     @Transactional
@@ -83,5 +91,33 @@ class JoinService(
             )
         }
         memberAgreementRepository.saveAll(memberAgreements)
+    }
+
+    @Transactional
+    fun sendVerifyNumberToPhone(phoneNumber: PhoneNumber) {
+        val verifyNumber = "0000"
+        val expiredDtm = LocalDateTime.now().plusMinutes(1)
+
+        verifyNumberRepository.findByPhoneNumber(phoneNumber)?.apply {
+            this.number = verifyNumber
+            this.expiredDtm = expiredDtm
+        } ?: run {
+            verifyNumberRepository.save(VerifyNumber(phoneNumber, verifyNumber, expiredDtm))
+        }
+    }
+
+    @Transactional
+    fun verifyNumber(phoneNumber: PhoneNumber, checkNumber: String) {
+        return verifyNumberRepository.findByPhoneNumber(phoneNumber)
+            ?.let {
+                if (it.isExpired()) { throw ExpiredVerifyNumberException() }
+
+                if (it.isMatched(checkNumber)) {
+                    verifyNumberRepository.delete(it)
+                } else {
+                    throw NotMatchedVerifyNumberException()
+                }
+            }
+            ?: throw NotGenerateVerifyNumberException()
     }
 }
