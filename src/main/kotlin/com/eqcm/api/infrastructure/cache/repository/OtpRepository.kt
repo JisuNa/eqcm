@@ -12,7 +12,7 @@ class OtpRepository(private val redisTemplate: RedisTemplate<String, String>) {
     }
 
     fun findByKey(phoneNumber: PhoneNumber): String? {
-        return redisTemplate.opsForValue().get(OTP_KEY + phoneNumber.value)
+        return redisTemplate.opsForValue().get("$OTP_KEY:${phoneNumber.value}")
     }
 
     companion object {
