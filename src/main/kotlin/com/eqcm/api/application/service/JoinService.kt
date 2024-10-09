@@ -9,6 +9,7 @@ import com.eqcm.api.domain.value.Email
 import com.eqcm.api.domain.value.PhoneNumber
 import com.eqcm.api.domain.vo.TermsAgreement
 import com.eqcm.api.infrastructure.cache.repository.OtpRepository
+import com.eqcm.api.infrastructure.notification.SmsSender
 import com.eqcm.api.infrastructure.persistence.entity.Member
 import com.eqcm.api.infrastructure.persistence.entity.MemberAgreement
 import com.eqcm.api.infrastructure.persistence.entity.MemberSocial
@@ -26,7 +27,8 @@ class JoinService(
     private val memberAgreementRepository: MemberAgreementRepository,
     private val memberSocialRepository: MemberSocialRepository,
     private val otpRepository: OtpRepository,
-    private val passwordProvider: PasswordProvider
+    private val passwordProvider: PasswordProvider,
+    private val smsSender: SmsSender
 ) {
     @Transactional
     fun emailJoin(req: EmailJoinRequest) {
@@ -94,6 +96,7 @@ class JoinService(
     fun sendOtpToPhone(phoneNumber: PhoneNumber): String {
         val otp = OtpGenerator.generate()
         otpRepository.save(phoneNumber, otp)
+        smsSender.send(phoneNumber, otp)
         return otp
     }
 
