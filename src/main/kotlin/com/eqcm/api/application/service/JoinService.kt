@@ -100,12 +100,8 @@ class JoinService(
         return otp
     }
 
-    fun verifyOtp(phoneNumber: PhoneNumber, checkNumber: String) {
-        otpRepository.findByKey(phoneNumber)
-            ?.let { otp ->
-                if (otp != checkNumber) {
-                    throw NotMatchedOtpException()
-                }
-            } ?: throw NotFoundOtpException()
+    fun verifyOtp(phoneNumber: PhoneNumber, reqOtp: String) {
+        val savedOtp = otpRepository.findByKey(phoneNumber) ?: throw NotFoundOtpException()
+        if (savedOtp != reqOtp) { throw NotMatchedOtpException() }
     }
 }

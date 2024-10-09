@@ -35,7 +35,7 @@ class JoinController(private val joinService: JoinService) {
 
     @PostMapping("/verify/otp/phone", name = "휴대폰 인증번호 확인")
     fun verifyOtpPhone(@RequestBody req: OtpVerifyRequest): NoDataResponse {
-        joinService.verifyOtp(req.phoneNumber, req.checkNumber)
+        joinService.verifyOtp(req.phoneNumber, req.otp)
         return NoDataResponse()
     }
 }

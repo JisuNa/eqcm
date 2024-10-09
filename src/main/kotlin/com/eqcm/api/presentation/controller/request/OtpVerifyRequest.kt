@@ -4,5 +4,5 @@ import com.eqcm.api.domain.value.PhoneNumber
 
 data class OtpVerifyRequest(
     val phoneNumber: PhoneNumber,
-    val checkNumber: String
+    val otp: String
 )
