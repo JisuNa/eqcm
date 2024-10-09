@@ -4,10 +4,9 @@ import com.eqcm.api.application.service.JoinService
 import com.eqcm.api.presentation.common.response.NoDataResponse
 import com.eqcm.api.presentation.common.response.SingleResponse
 import com.eqcm.api.presentation.controller.request.EmailJoinRequest
-import com.eqcm.api.presentation.controller.request.VerifyNumberSendPhoneRequest
+import com.eqcm.api.presentation.controller.request.OtpSendPhoneRequest
+import com.eqcm.api.presentation.controller.request.OtpVerifyRequest
 import com.eqcm.api.presentation.controller.request.SocialJoinRequest
-import com.eqcm.api.presentation.controller.request.VerifyNumberRequest
-import com.eqcm.api.presentation.controller.response.VerifyNumberResponse
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -29,15 +28,14 @@ class JoinController(private val joinService: JoinService) {
         return NoDataResponse()
     }
 
-    @PostMapping("/send/verify-number/phone", name = "휴대폰 인증번호 발송")
-    fun sendVerifyNumberToPhone(@RequestBody req: VerifyNumberSendPhoneRequest): NoDataResponse {
-        joinService.sendVerifyNumberToPhone(req.phoneNumber)
-        return NoDataResponse()
+    @PostMapping("/send/otp/phone", name = "휴대폰 인증번호 발송")
+    fun sendOtpToPhone(@RequestBody req: OtpSendPhoneRequest): SingleResponse<String> {
+        return SingleResponse(joinService.sendOtpToPhone(req.phoneNumber))
     }
 
-    @PostMapping("/verify/phone", name = "휴대폰 인증번호 확인")
-    fun verifyPhone(@RequestBody req: VerifyNumberRequest): NoDataResponse {
-        joinService.verifyNumber(req.phoneNumber, req.checkNumber)
+    @PostMapping("/verify/otp/phone", name = "휴대폰 인증번호 확인")
+    fun verifyOtpPhone(@RequestBody req: OtpVerifyRequest): NoDataResponse {
+        joinService.verifyOtp(req.phoneNumber, req.checkNumber)
         return NoDataResponse()
     }
 }

@@ -2,4 +2,4 @@ package com.eqcm.api.application.exception
 
 import com.eqcm.api.application.common.GlobalResponseType
 
-class ExpiredVerifyNumberException : BaseException(GlobalResponseType.EXPIRED_VERIFY_NUMBER)
+class NotMatchedOtpException : BaseException(GlobalResponseType.NOT_MATCHED_OTP)
