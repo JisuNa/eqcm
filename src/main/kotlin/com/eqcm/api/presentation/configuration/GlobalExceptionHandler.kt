@@ -26,7 +26,7 @@ class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException::class)
     fun handleHttpMessageNotReadableException(e: HttpMessageNotReadableException): ErrorResponse {
         val cause = e.cause as? MismatchedInputException
-            ?: return ErrorResponse(GlobalResponseType.BAD_REQUEST, "입력 값을 확인해주세요.")
+            ?: return ErrorResponse(GlobalResponseType.BAD_REQUEST, e.message ?: "입력 값을 확인해주세요.")
 
         val mismatchedFieldNames = cause.path.mapNotNull { it.fieldName }
         if (mismatchedFieldNames.isNotEmpty()) {

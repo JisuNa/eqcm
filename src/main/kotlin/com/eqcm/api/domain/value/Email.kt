@@ -3,9 +3,7 @@ package com.eqcm.api.domain.value
 @JvmInline
 value class Email(val value: String) {
     init {
-        if (isNotValid(value)) {
-            throw IllegalArgumentException("이메일 형식을 확인해주세요.")
-        }
+        require(isNotValid(value).not()) { "이메일 형식을 확인해주세요." }
     }
 
     companion object {
