@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class OtpRepository(private val redisTemplate: RedisTemplate<String, String>) {
     fun save(phoneNumber: PhoneNumber, otp: String) {
-        redisTemplate.opsForValue().set(OTP_KEY + phoneNumber.value, otp, OTP_EXPIRE_MINUTES, TimeUnit.MINUTES)
+        redisTemplate.opsForValue().set("$OTP_KEY:${phoneNumber.value}", otp, OTP_EXPIRE_MINUTES, TimeUnit.MINUTES)
     }
 
     fun findByKey(phoneNumber: PhoneNumber): String? {
