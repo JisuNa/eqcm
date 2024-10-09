@@ -2,7 +2,10 @@ package com.eqcm.api.presentation.controller
 
 import com.eqcm.api.application.service.JoinService
 import com.eqcm.api.presentation.common.response.NoDataResponse
+import com.eqcm.api.presentation.common.response.SingleResponse
 import com.eqcm.api.presentation.controller.request.EmailJoinRequest
+import com.eqcm.api.presentation.controller.request.OtpSendPhoneRequest
+import com.eqcm.api.presentation.controller.request.OtpVerifyRequest
 import com.eqcm.api.presentation.controller.request.SocialJoinRequest
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
@@ -22,6 +25,17 @@ class JoinController(private val joinService: JoinService) {
     @PostMapping("/social", name = "소셜 회원가입")
     fun socialJoin(@RequestBody @Validated req: SocialJoinRequest): NoDataResponse {
         joinService.socialJoin(req)
+        return NoDataResponse()
+    }
+
+    @PostMapping("/send/otp/phone", name = "휴대폰 인증번호 발송")
+    fun sendOtpToPhone(@RequestBody req: OtpSendPhoneRequest): SingleResponse<String> {
+        return SingleResponse(joinService.sendOtpToPhone(req.phoneNumber))
+    }
+
+    @PostMapping("/verify/otp/phone", name = "휴대폰 인증번호 확인")
+    fun verifyOtpPhone(@RequestBody req: OtpVerifyRequest): NoDataResponse {
+        joinService.verifyOtp(req.phoneNumber, req.otp)
         return NoDataResponse()
     }
 }

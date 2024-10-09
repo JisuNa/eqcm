@@ -3,9 +3,7 @@ package com.eqcm.api.domain.value
 @JvmInline
 value class Birthday(val value: String) {
     init {
-        if (isNotValid(value)) {
-            throw IllegalArgumentException("생년월일 형식을 확인해주세요.")
-        }
+        require(isNotValid(value).not()) { "생년월일 형식을 확인해주세요." }
     }
 
     companion object {

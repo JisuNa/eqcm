@@ -1,12 +1,9 @@
 package com.eqcm.api.domain.value
 
-
 @JvmInline
 value class PhoneNumber(val value: String) {
     init {
-        if (isNotValid(value)) {
-            throw IllegalArgumentException("휴대폰 번호 형식을 확인해주세요.")
-        }
+        require(isNotValid(value).not()) { "전화번호 형식을 확인해주세요." }
     }
 
     companion object {
