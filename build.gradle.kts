@@ -27,7 +27,7 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
     implementation("io.jsonwebtoken:jjwt:0.12.6")
     implementation("org.mindrot:jbcrypt:0.4")
-    implementation("com.mysql:mysql-connector-j:8.4.0")
+    runtimeOnly("com.mysql:mysql-connector-j:8.4.0")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
