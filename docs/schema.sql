@@ -14,12 +14,14 @@ create table member
 
 create unique index member_email_uindex on member (email);
 
-create table member_social
+create table member_sns
 (
-    member_id     bigint unsigned not null comment '회원식별값',
-    provider_type varchar(20)     not null comment '제공자',
-    social_id     varchar(100)    not null comment '소셜식별값',
-    primary key (member_id)
+    member_id       bigint unsigned not null comment '회원식별값',
+    sns_id          varchar(255)    not null comment 'SNS 식별값',
+    sns_type        varchar(20)     not null comment '제공자',
+    sns_profile     varchar(100)    not null comment '프로필',
+    sns_connect_dtm datetime        not null comment '연결일시',
+    primary key (member_id, sns_id)
 ) comment '회원 소셜';
 
 create unique index member_social_provider_social_id_uindex on member_social (provider_type, social_id);

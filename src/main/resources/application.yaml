@@ -28,3 +28,11 @@ spring:
       password: ${REDIS_PASSWORD:temp}
 jwt:
   secret: ${JWT_SECRET_KEY:"249526a8897e06af7d405b9705f3611f56fe4f4e6d55e078f52cd7e979f952aeb5a716d72939b51abd84ff8b9fbbb6427828890d7262cedcbef827e62452be84="}
+
+social:
+  client:
+    naver:
+      client-id: ${NAVER_CLIENT_ID:test}
+      client-secret: ${NAVER_SECRET_KEY:test}
+      redirect-uri: ${NAVER_REDIRECT_URI:http://localhost:8080/login/naver}
+      grant-type: authorization_code

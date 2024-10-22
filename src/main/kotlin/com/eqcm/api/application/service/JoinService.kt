@@ -12,12 +12,9 @@ import com.eqcm.api.infrastructure.cache.repository.OtpRepository
 import com.eqcm.api.infrastructure.notification.SmsSender
 import com.eqcm.api.infrastructure.persistence.entity.Member
 import com.eqcm.api.infrastructure.persistence.entity.MemberAgreement
-import com.eqcm.api.infrastructure.persistence.entity.MemberSocial
 import com.eqcm.api.infrastructure.persistence.repository.MemberAgreementRepository
 import com.eqcm.api.infrastructure.persistence.repository.MemberRepository
-import com.eqcm.api.infrastructure.persistence.repository.MemberSocialRepository
 import com.eqcm.api.presentation.controller.request.EmailJoinRequest
-import com.eqcm.api.presentation.controller.request.SocialJoinRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -25,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional
 class JoinService(
     private val memberRepository: MemberRepository,
     private val memberAgreementRepository: MemberAgreementRepository,
-    private val memberSocialRepository: MemberSocialRepository,
     private val otpRepository: OtpRepository,
     private val passwordProvider: PasswordProvider,
     private val smsSender: SmsSender
@@ -49,37 +45,8 @@ class JoinService(
         return memberRepository.save(member)
     }
 
-    @Transactional
-    fun socialJoin(req: SocialJoinRequest) {
-        checkEmail(req.joinInfo.email)
-        val member = addMemberWithSocial(req)
-        addMemberAgreement(member.id, req.termsAgreements)
-    }
-
     private fun checkEmail(email: Email) {
         memberRepository.findByEmail(email)?.also { throw DuplicateEmailException() }
-    }
-
-    private fun addMemberWithSocial(req: SocialJoinRequest): Member {
-        val savedMember = memberRepository.save(
-            Member(
-                email = req.joinInfo.email,
-                name = req.joinInfo.name,
-                gender = req.joinInfo.gender,
-                birthday = req.joinInfo.birthday,
-                phoneNumber = req.joinInfo.phoneNumber
-            )
-        )
-
-        memberSocialRepository.save(
-            MemberSocial(
-                memberId = savedMember.id,
-                providerType = req.socialProviderType,
-                socialId = req.socialId
-            )
-        )
-
-        return savedMember
     }
 
     private fun addMemberAgreement(memberId: Long, termsAgreements: List<TermsAgreement>) {
@@ -102,6 +69,8 @@ class JoinService(
 
     fun verifyOtp(phoneNumber: PhoneNumber, reqOtp: String) {
         val savedOtp = otpRepository.findByKey(phoneNumber) ?: throw NotFoundOtpException()
-        if (savedOtp != reqOtp) { throw NotMatchedOtpException() }
+        if (savedOtp != reqOtp) {
+            throw NotMatchedOtpException()
+        }
     }
 }
