@@ -1,6 +1,6 @@
 package com.eqcm.api.domain.declaration
 
-enum class SocialProviderType(
+enum class SnsType(
     override val dbCode: String,
     override val title: String
 ) : BaseEnum {
