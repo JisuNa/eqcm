@@ -5,16 +5,16 @@ import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
+import jakarta.persistence.ManyToOne
 
 @Entity
-class ProductOptionType(
-    val name: String
+class ItemStock(
+    var stock: Int
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productOptionType")
-    val productOptions: List<ProductOption> = listOf()
+    @ManyToOne(fetch = FetchType.LAZY)
+    val item: Item? = null
 }

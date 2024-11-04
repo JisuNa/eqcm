@@ -36,45 +36,6 @@ create table member_agreement
     primary key (member_id)
 ) comment '회원 동의';
 
-create table product
-(
-    id          bigint unsigned auto_increment comment '식별값',
-    name        varchar(100) not null comment '이름',
-    price       int unsigned not null comment '가격',
-    brand_id    bigint unsigned comment '브랜드 식별값',
-    category_id bigint unsigned comment '카테고리 식별값',
-    primary key (id)
-) comment '상품';
-
-CREATE INDEX idx_category_id ON product (category_id);
-CREATE INDEX idx_price ON product (price);
-
-create table product_inventory
-(
-    id                   bigint unsigned auto_increment comment '식별값',
-    product_id           bigint unsigned not null comment '상품 식별값',
-    color_option_id      bigint unsigned not null comment '색상옵션 식별값',
-    size_option_id       bigint unsigned not null comment '사이즈옵션 식별값',
-    color_size_option_id bigint unsigned not null comment '색상-사이즈옵션 식별값',
-    stock                int unsigned    not null comment '재고',
-    primary key (id)
-) comment '상품 재고';
-
-create table product_option
-(
-    id             bigint unsigned auto_increment comment '식별값',
-    name           varchar(20)     not null comment '이름',
-    product_id     bigint unsigned not null comment '상품 식별값',
-    option_type_id bigint unsigned not null comment '옵션 타입 식별값',
-    primary key (id)
-) comment '상품 옵션';
-
-create table product_option_type(
-    id   bigint unsigned auto_increment comment '식별값',
-    name varchar(20)     not null comment '이름',
-    primary key (id)
-) comment '상품 옵션 타입';
-
 create table brand
 (
     id       bigint unsigned auto_increment comment '식별값',
@@ -92,3 +53,45 @@ create table category
 ) comment '카테고리';
 
 CREATE INDEX idx_name ON category (name);
+
+create table product
+(
+    id            bigint unsigned auto_increment comment '식별값',
+    name          varchar(100)    not null comment '이름',
+    price         int unsigned    not null comment '가격',
+    discount_rate int unsigned    not null comment '할인율',
+    brand_id      bigint unsigned not null comment '브랜드 식별값',
+    category_id   bigint unsigned not null comment '카테고리 식별값',
+    primary key (id)
+) comment '상품';
+
+create table product_option_group
+(
+    id   bigint unsigned auto_increment comment '식별값',
+    name varchar(20) not null comment '이름',
+    primary key (id)
+) comment '상품 옵션 그룹';
+
+create table product_option
+(
+    id                   bigint unsigned auto_increment comment '식별값',
+    item_option_group_id bigint unsigned not null comment '상품 옵션 그룹 식별값',
+    name                 varchar(20)     not null comment '이름',
+    primary key (id)
+) comment '상품 옵션';
+
+create table item
+(
+    id             bigint unsigned auto_increment comment '식별값',
+    product_id     bigint unsigned not null comment '상품 식별값',
+    item_option_id bigint unsigned null comment '상품 옵션 그룹 식별값',
+    primary key (id)
+) comment '항목';
+
+create table item_stock
+(
+    id          bigint unsigned auto_increment comment '식별값',
+    item_id     bigint unsigned not null comment '항목 식별값',
+    stock_count int unsigned    not null comment '재고 수량',
+    primary key (id)
+) comment '항목 재고';
