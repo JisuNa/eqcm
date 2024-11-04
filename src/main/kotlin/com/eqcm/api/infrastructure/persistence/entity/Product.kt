@@ -13,6 +13,7 @@ import jakarta.persistence.OneToMany
 class Product(
     val name: String,
     val price: Int,
+    var discountRate: Int,
     brand: Brand,
     category: Category
 ) {
