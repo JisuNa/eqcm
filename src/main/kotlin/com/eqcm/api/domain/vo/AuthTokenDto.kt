@@ -1,6 +1,6 @@
 package com.eqcm.api.domain.vo
 
-data class AuthToken(
+class AuthTokenDto(
     val accessToken: String,
     val refreshToken: String
 )

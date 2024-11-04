@@ -19,7 +19,7 @@ class Product(
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null
+    val id: Long = 0
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brandId", insertable = false, updatable = false)
@@ -30,5 +30,5 @@ class Product(
     var category: Category = category
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-    val productOptions: List<ProductOption> = listOf()
+    val items: List<Item> = listOf()
 }

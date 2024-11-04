@@ -90,8 +90,8 @@ create table item
 
 create table item_stock
 (
-    id          bigint unsigned auto_increment comment '식별값',
-    item_id     bigint unsigned not null comment '항목 식별값',
-    stock_count int unsigned    not null comment '재고 수량',
+    id       bigint unsigned auto_increment comment '식별값',
+    item_id  bigint unsigned not null comment '항목 식별값',
+    quantity int unsigned    not null comment '수량',
     primary key (id)
 ) comment '항목 재고';
