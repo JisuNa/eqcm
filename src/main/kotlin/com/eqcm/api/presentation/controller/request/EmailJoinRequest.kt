@@ -1,10 +1,10 @@
 package com.eqcm.api.presentation.controller.request
 
-import com.eqcm.api.domain.vo.JoinInfo
-import com.eqcm.api.domain.vo.TermsAgreement
+import com.eqcm.api.domain.vo.JoinInfoVo
+import com.eqcm.api.domain.vo.TermsAgreementVo
 
 data class EmailJoinRequest(
-    val joinInfo: JoinInfo,
-    val termsAgreements: List<TermsAgreement>,
+    val joinInfoVo: JoinInfoVo,
+    val termsAgreementVos: List<TermsAgreementVo>,
     val password: String
 )

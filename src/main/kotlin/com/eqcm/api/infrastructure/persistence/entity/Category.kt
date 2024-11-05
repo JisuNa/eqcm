@@ -12,5 +12,5 @@ class Category(
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null
+    val id: Long = 0
 }

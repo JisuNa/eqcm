@@ -7,7 +7,7 @@ import com.eqcm.api.application.security.PasswordProvider
 import com.eqcm.api.domain.generator.OtpGenerator
 import com.eqcm.api.domain.value.Email
 import com.eqcm.api.domain.value.PhoneNumber
-import com.eqcm.api.domain.vo.TermsAgreement
+import com.eqcm.api.domain.vo.TermsAgreementVo
 import com.eqcm.api.infrastructure.cache.repository.OtpRepository
 import com.eqcm.api.infrastructure.notification.SmsSender
 import com.eqcm.api.infrastructure.persistence.entity.Member
@@ -28,19 +28,19 @@ class JoinService(
 ) {
     @Transactional
     fun emailJoin(req: EmailJoinRequest) {
-        checkEmail(req.joinInfo.email)
+        checkEmail(req.joinInfoVo.email)
         val member = addMember(req)
-        addMemberAgreement(member.id, req.termsAgreements)
+        addMemberAgreement(member.id, req.termsAgreementVos)
     }
 
     private fun addMember(req: EmailJoinRequest): Member {
         val member = Member(
-            email = req.joinInfo.email,
+            email = req.joinInfoVo.email,
             password = passwordProvider.hash(req.password),
-            name = req.joinInfo.name,
-            gender = req.joinInfo.gender,
-            birthday = req.joinInfo.birthday,
-            phoneNumber = req.joinInfo.phoneNumber
+            name = req.joinInfoVo.name,
+            gender = req.joinInfoVo.gender,
+            birthday = req.joinInfoVo.birthday,
+            phoneNumber = req.joinInfoVo.phoneNumber
         )
         return memberRepository.save(member)
     }
@@ -49,8 +49,8 @@ class JoinService(
         memberRepository.findByEmail(email)?.also { throw DuplicateEmailException() }
     }
 
-    private fun addMemberAgreement(memberId: Long, termsAgreements: List<TermsAgreement>) {
-        val memberAgreements = termsAgreements.map {
+    private fun addMemberAgreement(memberId: Long, termsAgreementVos: List<TermsAgreementVo>) {
+        val memberAgreements = termsAgreementVos.map {
             MemberAgreement(
                 memberId = memberId,
                 termsType = it.type,

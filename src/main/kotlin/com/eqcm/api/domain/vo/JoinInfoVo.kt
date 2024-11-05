@@ -5,7 +5,7 @@ import com.eqcm.api.domain.value.Birthday
 import com.eqcm.api.domain.value.Email
 import com.eqcm.api.domain.value.PhoneNumber
 
-data class JoinInfo(
+class JoinInfoVo(
     val email: Email,
     val name: String,
     val gender: Gender,

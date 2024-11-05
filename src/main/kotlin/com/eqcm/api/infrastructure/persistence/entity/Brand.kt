@@ -15,9 +15,8 @@ class Brand(
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null
+    val id: Long = 0
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "brand")
-    @JoinColumn(name = "productId", insertable = false, updatable = false)
     val products: List<Product> = listOf()
 }

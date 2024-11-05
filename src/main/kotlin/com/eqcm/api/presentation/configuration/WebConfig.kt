@@ -8,15 +8,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 class WebConfig : WebMvcConfigurer {
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping(ALLOWED_MAPPING)
-            .allowedOriginPatterns(ALLOWED_ORIGINS)
-            .allowedHeaders(ALLOWED_HEADERS)
-            .allowedMethods(ALLOWED_METHODS)
+            .allowedOrigins(*ALLOWED_ORIGINS.split(", ").toTypedArray())
+            .allowedHeaders(*ALLOWED_HEADERS.split(", ").toTypedArray())
+            .allowedMethods(*ALLOWED_METHODS)
+            .allowCredentials(true)
+            .maxAge(3600)
     }
 
     companion object {
         const val ALLOWED_MAPPING = "/**"
-        const val ALLOWED_METHODS = "POST, PUT, GET, DELETE, OPTIONS"
-        const val ALLOWED_ORIGINS = "*"
-        const val ALLOWED_HEADERS = "*"
+        val ALLOWED_METHODS = arrayOf("POST", "PUT", "GET", "DELETE", "OPTIONS")
+        const val ALLOWED_ORIGINS = "http://localhost:3000"
+        const val ALLOWED_HEADERS = "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     }
 }

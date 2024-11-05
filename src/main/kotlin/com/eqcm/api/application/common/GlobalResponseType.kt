@@ -18,6 +18,7 @@ enum class GlobalResponseType(
     NOT_FOUND_MEMBER_SOCIAL("404", HttpStatus.NOT_FOUND, "해당 사용자의 소셜 로그인 정보가 존재하지 않습니다."),
     NOT_FOUND_PASSWORD("404", HttpStatus.NOT_FOUND, "비밀번호가 설정되어있지 않습니다. 관리자에게 문의하세요."),
     NOT_FOUND_OTP("404", HttpStatus.NOT_FOUND, "인증번호를 발급해주세요."),
+    NOT_FOUND_PRODUCT("404", HttpStatus.NOT_FOUND, "상품이 존재하지 않습니다."),
 
     INVALID_ENUM_CODE_IN_DB_DATA("500", HttpStatus.INTERNAL_SERVER_ERROR, "DB에 저장된 열거형 코드가 올바르지 않습니다."),
 
