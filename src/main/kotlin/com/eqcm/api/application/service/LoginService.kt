@@ -7,7 +7,7 @@ import com.eqcm.api.application.security.JwtProvider
 import com.eqcm.api.application.security.PasswordProvider
 import com.eqcm.api.domain.declaration.JwtType
 import com.eqcm.api.domain.value.Email
-import com.eqcm.api.domain.vo.AuthTokenDto
+import com.eqcm.api.domain.vo.AuthTokenVo
 import com.eqcm.api.infrastructure.external.client.NaverSnsClient
 import com.eqcm.api.infrastructure.external.config.NaverSnsConfig
 import com.eqcm.api.infrastructure.persistence.entity.Member
@@ -25,7 +25,7 @@ class LoginService(
     private val naverSnsClient: NaverSnsClient,
     private val naverSnsConfig: NaverSnsConfig
 ) {
-    fun emailLogin(email: Email, password: String): AuthTokenDto {
+    fun emailLogin(email: Email, password: String): AuthTokenVo {
         val member = getMemberWithEmail(email)
 
         val memberPassword = member.password ?: memberSocialRepository.findById(member.id).getOrNull()
@@ -43,14 +43,14 @@ class LoginService(
         return memberRepository.findByEmail(email) ?: throw UnauthorizedException()
     }
 
-    private fun getAuthToken(email: Email): AuthTokenDto {
+    private fun getAuthToken(email: Email): AuthTokenVo {
         val accessToken = jwtProvider.generate(email, JwtType.ACCESS)
         val refreshToken = jwtProvider.generate(email, JwtType.REFRESH)
 
-        return AuthTokenDto(accessToken, refreshToken)
+        return AuthTokenVo(accessToken, refreshToken)
     }
 
-    fun naverLogin(code: String, state: String): AuthTokenDto {
+    fun naverLogin(code: String, state: String): AuthTokenVo {
         return naverSnsClient.getToken(
             grantType = naverSnsConfig.grantType,
             clientId = naverSnsConfig.clientId,
@@ -58,7 +58,7 @@ class LoginService(
             code = code,
             state = state
         ).let {
-            AuthTokenDto(it.accessToken, it.refreshToken)
+            AuthTokenVo(it.accessToken, it.refreshToken)
         }
     }
 }
