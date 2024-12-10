@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/products")
 class ProductController(private val productService: ProductService) {
-    @GetMapping("/{productId}")
+    @GetMapping("/{productId}", name = "상품 상세 조회")
     fun getProductDetail(@PathVariable productId: Long): SingleResponse<ProductDetailResponse> {
         return SingleResponse(
             productService.getProductDetail(productId).let {
