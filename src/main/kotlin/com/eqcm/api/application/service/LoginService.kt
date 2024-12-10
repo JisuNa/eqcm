@@ -50,7 +50,7 @@ class LoginService(
         return AuthTokenVo(accessToken, refreshToken)
     }
 
-    fun naverLogin(code: String, state: String): AuthTokenVo {
+    fun getNaverLoginToken(code: String, state: String): AuthTokenVo {
         return naverSnsClient.getToken(
             grantType = naverSnsConfig.grantType,
             clientId = naverSnsConfig.clientId,
